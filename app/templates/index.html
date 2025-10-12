@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AgentOS</title>
+    <style>
+        body { font-family: sans-serif; display: flex; gap: 20px; padding: 20px; }
+        .panel { border: 1px solid #ccc; padding: 15px; border-radius: 8px; width: 45%; }
+        button { background: #007bff; color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer; }
+        .approval, .event { border: 1px solid #eee; padding: 10px; margin-bottom: 10px; border-radius: 5px; }
+    </style>
+</head>
+<body>
+    <div class="panel">
+        <h2>Controls</h2>
+        <button id="runWorkflowBtn">Run New Workflow</button>
+        <p>Current Workflow ID: <strong id="workflowId">None</strong></p>
+        <hr>
+        <h2>Pending Approvals</h2>
+        <div id="approvalsList"></div>
+    </div>
+    <div class="panel">
+        <h2>Event Timeline</h2>
+        <div id="eventsList"></div>
+    </div>
+    <script src="/static/script.js"></script>
+</body>
+</html>
