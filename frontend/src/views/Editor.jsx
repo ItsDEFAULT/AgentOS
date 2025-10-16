@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import WorkflowEditor from '../components/WorkflowEditor';
+import InstructionsPanel from '../components/InstructionsPanel';
 
 function Editor() {
   const [workflows, setWorkflows] = useState([]);
@@ -34,6 +34,16 @@ function Editor() {
     alert('Workflow saved!');
   };
 
+  const newWorkflow = () => {
+    const workflowName = prompt("Enter a new workflow name (e.g., my_workflow.yaml):");
+    if (workflowName) {
+      const newContent = `name: ${workflowName}\ndescription: A new workflow.\nsteps:\n  - id: start\n    type: agent\n    prompt: "Start"\n    next_step: end\n  - id: end\n    type: agent\n    prompt: "End"`;
+      setWorkflowContent(newContent);
+      setSelectedWorkflow(workflowName);
+      setWorkflows(prev => [...prev, workflowName]);
+    }
+  };
+
   return (
     <div>
       <div className="flex justify-between items-center mb-4">
@@ -46,9 +56,14 @@ function Editor() {
         <button onClick={saveWorkflow} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
           Save Workflow
         </button>
+        <button onClick={newWorkflow} className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+          New Workflow
+        </button>
       </div>
-      <textarea value={workflowContent} onChange={e => setWorkflowContent(e.target.value)} className="w-full h-96 p-2 border border-gray-300 rounded-md font-mono"></textarea>
-      <WorkflowEditor />
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <textarea value={workflowContent} onChange={e => setWorkflowContent(e.target.value)} className="w-full h-96 p-2 border border-gray-300 rounded-md font-mono"></textarea>
+        <InstructionsPanel />
+      </div>
     </div>
   );
 }
