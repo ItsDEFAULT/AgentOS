@@ -1,0 +1,26 @@
+name: Social Media Post Generation
+description: A workflow to generate and approve a social media post.
+steps:
+  - id: start_node
+    type: agent
+    prompt: "Generate a tweet about the launch of our new product, 'AgentOS'. Keep it under 280 characters."
+    next_step: human_approval_post
+
+  - id: human_approval_post
+    type: human_approval
+    prompt: "A new social media post has been generated. Please review and approve."
+    channel: "email"
+    ui_schema:
+      - name: "feedback"
+        label: "Provide feedback for the marketing team"
+        type: "textarea"
+    next_step: agent_publish_post
+
+  - id: agent_publish_post
+    type: agent
+    prompt: "Publish the approved social media post to all channels."
+    next_step: end_node
+
+  - id: end_node
+    type: agent
+    prompt: "Workflow finished."

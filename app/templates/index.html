@@ -3,12 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>AgentOS</title>
-    <style>
-        body { font-family: sans-serif; display: flex; gap: 20px; padding: 20px; }
-        .panel { border: 1px solid #ccc; padding: 15px; border-radius: 8px; width: 45%; }
-        button { background: #007bff; color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer; }
-        .approval, .event { border: 1px solid #eee; padding: 10px; margin-bottom: 10px; border-radius: 5px; }
-    </style>
+    <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
     <div class="panel">
@@ -23,6 +18,15 @@
         <h2>Event Timeline</h2>
         <div id="eventsList"></div>
     </div>
+    <div class="panel">
+        <h2>Workflow Editor</h2>
+        <div id="workflow-editor">
+            <div class="workflow-node" style="left: 50px; top: 50px;">Start</div>
+            <div class="workflow-node" style="left: 200px; top: 150px;">Agent Action</div>
+            <div class="workflow-node" style="left: 50px; top: 250px;">End</div>
+        </div>
+    </div>
     <script src="/static/script.js"></script>
+    <script src="/static/editor.js"></script>
 </body>
 </html>

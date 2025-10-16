@@ -1,5 +1,6 @@
 from app import db
 from app.models.event import Event
+from app.services.message_queue import put_message
 
 subscribers = []
 
@@ -13,10 +14,25 @@ def publish(workflow_id, event_type, payload=None):
     """
     print(f"EVENT PUBLISHED: {event_type} for workflow {workflow_id}")
     # 1. Persist the event
-    new_event = Event(workflow_id=workflow_id, event_type=event_type, payload=payload or {})
+    new_event = Event(workflow_id=workflow_id, event_type=event_type, payload=payload or {}, status='PENDING')
     db.session.add(new_event)
     db.session.commit()
 
     # 2. Notify subscribers
-    for callback in subscribers:
-        callback(workflow_id, event_type, payload)
+    try:
+        for callback in subscribers:
+            callback(workflow_id, event_type, payload)
+        new_event.status = 'PROCESSED'
+    except Exception as e:
+        print(f"ERROR PROCESSING EVENT: {e}")
+        new_event.status = 'FAILED'
+    db.session.commit()
+    
+    # Notify frontend via SSE
+    put_message({
+        'event': 'NEW_EVENT',
+        'workflow_id': workflow_id,
+        'type': event_type,
+        'payload': payload,
+        'timestamp': new_event.timestamp.isoformat()
+    })

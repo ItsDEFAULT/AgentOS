@@ -1,0 +1,44 @@
+name: Comprehensive Feature Test
+description: A workflow to test branching, human approvals, and other advanced features.
+steps:
+  - id: start_node
+    type: agent
+    prompt: "Analyze the following user request and classify it as either 'urgent' or 'standard'. User request: 'My login is broken, I need immediate assistance.'"
+    next_step: check_urgency
+
+  - id: check_urgency
+    type: choice
+    choices:
+      - condition: "urgent"
+        next_step: human_approval_urgent
+      - condition: "standard"
+        next_step: agent_standard_process
+    default_next_step: agent_standard_process
+
+  - id: human_approval_urgent
+    type: human_approval
+    prompt: "An urgent issue has been detected. Please review and approve the escalation."
+    channel: "slack" # Simulates sending to Slack
+    timeout_seconds: 300 # 5 minutes
+    ui_schema:
+      - name: "feedback"
+        label: "Provide feedback for the team"
+        type: "textarea"
+      - name: "priority"
+        label: "Confirm Priority Level"
+        type: "text"
+    next_step: agent_escalate
+
+  - id: agent_standard_process
+    type: agent
+    prompt: "Process the user request as a standard priority ticket."
+    next_step: end_node
+
+  - id: agent_escalate
+    type: agent
+    prompt: "Escalate the urgent issue to the senior engineering team with the provided feedback."
+    next_step: end_node
+
+  - id: end_node
+    type: agent # Using agent node as a simple end point
+    prompt: "Workflow finished."

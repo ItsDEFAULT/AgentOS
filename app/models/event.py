@@ -6,3 +6,4 @@ class Event(db.Model):
     event_type = db.Column(db.String(100), nullable=False)
     payload = db.Column(db.JSON)
     timestamp = db.Column(db.DateTime, server_default=db.func.now())
+    status = db.Column(db.String(50), default='PENDING', nullable=False) # PENDING, PROCESSED, FAILED

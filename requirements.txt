@@ -4,3 +4,4 @@ python-dotenv
 dotenv
 google-generativeai
 psycopg2
+waitress

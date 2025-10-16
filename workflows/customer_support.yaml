@@ -1,0 +1,50 @@
+name: Customer Support Ticket Automation
+description: A workflow to automate the handling of customer support tickets.
+steps:
+  - id: start_node
+    type: agent
+    prompt: "Analyze the following customer support ticket and classify it as 'technical', 'billing', or 'general'. Ticket: 'I'm having trouble connecting to the API.'"
+    next_step: classify_ticket
+
+  - id: classify_ticket
+    type: choice
+    choices:
+      - condition: "technical"
+        next_step: human_approval_technical
+      - condition: "billing"
+        next_step: agent_billing
+      - condition: "general"
+        next_step: agent_general
+    default_next_step: agent_general
+
+  - id: human_approval_technical
+    type: human_approval
+    prompt: "A technical support ticket has been received. Please review and assign to an engineer."
+    channel: "slack"
+    ui_schema:
+      - name: "assignee"
+        label: "Assign to Engineer"
+        type: "text"
+      - name: "priority"
+        label: "Set Priority"
+        type: "text"
+    next_step: agent_assign_ticket
+
+  - id: agent_billing
+    type: agent
+    prompt: "Forward the ticket to the billing department."
+    next_step: end_node
+
+  - id: agent_general
+    type: agent
+    prompt: "Respond to the customer with a link to the FAQ page."
+    next_step: end_node
+
+  - id: agent_assign_ticket
+    type: agent
+    prompt: "Assign the technical support ticket to the specified engineer with the given priority."
+    next_step: end_node
+
+  - id: end_node
+    type: agent
+    prompt: "Workflow finished."
