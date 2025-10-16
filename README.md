@@ -46,11 +46,12 @@ The architectural foundation of AgentOS opens up a wide range of possibilities f
     ```
     pip install -r requirements.txt
     ```
-2.  **Set Up the Database:**
+2.  **Set Up the Database and Gemini API key:**
     *   **Note:** This project requires PostgreSQL to be installed and running.
-    *   Create a `.env` file with your `DATABASE_URL`. For example:
+    *   Create a `.env` file with your `DATABASE_URL` and `GOOGLE_API_KEY`. For example:
         ```
         DATABASE_URL="postgresql://user:password@localhost/agentos_db"
+        GOOGLE_API_KEY="YOUR_API_KEY"
         ```
     *   Run `python -c "from app import create_app, db; app = create_app(); app.app_context().push(); db.create_all()"` to initialize the database.
 3.  **Run the Application:**
