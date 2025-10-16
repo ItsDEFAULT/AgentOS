@@ -2,6 +2,10 @@
 
 AgentOS is a scalable, resilient, and extensible orchestration platform designed to bridge the gap between deterministic workflows and non-deterministic agentic systems. It provides a robust framework for building, executing, and observing complex, event-driven workflows that can seamlessly integrate human-in-the-loop checkpoints.
 
+## Demo Video
+
+Please watch the demo here - https://drive.google.com/file/d/1r2tfuorZSp82Gubxl6UBibEDEXBX4njl/view
+
 ## Core Concepts & Parallels with Operating Systems
 
 AgentOS is architected around concepts that parallel modern operating systems, providing a familiar mental model for developers:
