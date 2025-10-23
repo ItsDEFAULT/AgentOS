@@ -58,8 +58,17 @@ The architectural foundation of AgentOS opens up a wide range of possibilities f
         GOOGLE_API_KEY="YOUR_API_KEY"
         ```
     *   Run `python -c "from app import create_app, db; app = create_app(); app.app_context().push(); db.create_all()"` to initialize the database.
-3.  **Run the Application:**
+3. **Build the frontend:**
+    In the frontend directory, install the node dependencies:
+    ```
+    cd frontend && npm i
+    ```
+    and then build the frontend
+    ```
+    npm run build
+    ```
+4.  **Run the Application:**
     ```
     python run.py
     ```
-4.  **Open your browser** and navigate to `http://127.0.0.1:5000`.
+5.  **Open your browser** and navigate to `http://127.0.0.1:5000`.
